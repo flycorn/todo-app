@@ -1,7 +1,6 @@
 package config
 
 import (
-	"flag"
 	"io/ioutil"
 	"github.com/sirupsen/logrus"
 	"encoding/json"
@@ -10,17 +9,22 @@ import (
 //配置参数
 type confParam struct {
 	Port string `json:"port"`
+	JwtSecret string `json:"jwtSecret"`
 }
 
+//配置表
 var CONFIG = &confParam{}
 
 func init(){
 	//模式类型
-	m := flag.String("m", "pro", "模式类型")
-	flag.Parse();
+	//m := flag.String("m", "pro", "模式类型")
+	//flag.Parse();
+
 
 	//拼接配置文件
-	configFile := "./config/"+*m+".json";
+	//configFile := "./config/"+*m+".json";
+	configFile := "./config/dev.json";
+
 	//读取对应环境配置
 	b ,err := ioutil.ReadFile(configFile)
 	if err != nil{

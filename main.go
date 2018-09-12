@@ -13,7 +13,7 @@ func main(){
 	//加载静态资源
 	app.Static("/assets", "./static")
 
-	//中间键
+	//中间件
 	//app.Use(middlewares.Default())
 
 	//加载默认模块

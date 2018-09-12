@@ -8,7 +8,6 @@ import (
 func Default() gin.HandlerFunc{
 	fmt.Println("--------- middleware ----------")
 	return func(c *gin.Context){
-		fmt.Println("hello : ----" )
 		c.Next()
 	}
 }
