@@ -57,7 +57,7 @@ func ApiAuth(allowUrl ...[]string) gin.HandlerFunc {
 				return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 			}
 			//接口签名
-			secretStr := config.CONFIG.JwtSecret
+			secretStr := config.Conf.JwtSecret
 			return []byte(secretStr), nil
 		})
 

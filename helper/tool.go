@@ -46,7 +46,7 @@ func GenerateToken(params map[string]string, extend ...map[string]string) string
 	claims["extend"] = extend
 	token.Claims = claims
 	//token
-	resToken, err := token.SignedString([]byte(config.CONFIG.JwtSecret))
+	resToken, err := token.SignedString([]byte(config.Conf.JwtSecret))
 	if err != nil {
 		return ""
 	}

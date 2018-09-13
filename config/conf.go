@@ -4,35 +4,36 @@ import (
 	"io/ioutil"
 	"github.com/sirupsen/logrus"
 	"encoding/json"
+	"flag"
 )
 
 //配置参数
-type confParam struct {
+type ConfParam struct {
 	Port string `json:"port"`
 	JwtSecret string `json:"jwtSecret"`
 }
 
 //配置表
-var CONFIG = &confParam{}
+var Conf *ConfParam
 
-func init(){
+func LoadConf(){
 	//模式类型
-	//m := flag.String("m", "pro", "模式类型")
-	//flag.Parse();
+	m := flag.String("m", "pro", "模式类型")
+	flag.Parse();
 
 
 	//拼接配置文件
-	//configFile := "./config/"+*m+".json";
-	configFile := "./config/dev.json";
+	configFile := "./config/"+*m+".json";
 
+	Conf = &ConfParam{}
 	//读取对应环境配置
 	b ,err := ioutil.ReadFile(configFile)
 	if err != nil{
 		logrus.Fatal("配置文件不存在")
 	}
-	errC := json.Unmarshal(b, CONFIG)
+	errC := json.Unmarshal(b, Conf)
 	if errC != nil {
 		logrus.Fatal("配置文件解析错误", errC)
 	}
-	logrus.Info("配置参数 ", CONFIG)
+	logrus.Info("配置参数 ", Conf)
 }

@@ -7,6 +7,12 @@ import (
 	"./config"
 )
 
+//初始化
+func init(){
+	//加载配置
+	config.LoadConf()
+}
+
 func main(){
 	app := gin.Default()
 
@@ -27,5 +33,5 @@ func main(){
 	})
 
 	//开启
-	app.Run(config.CONFIG.Port)
+	app.Run(config.Conf.Port)
 }
