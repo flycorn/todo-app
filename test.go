@@ -2,16 +2,21 @@ package main
 
 import (
 	"./helper"
+	"todo-app/config"
 )
 
 func main(){
 
+	config.LoadConf()
+
 	helper.Dd("----test----")
 
-	params := make(map[string]string)
-	params["name"] = "jack"
-	params["id"] = "2"
+	helper.Dd(config.Conf.Db.Mysql)
 
-	str := helper.GenerateToken(params)
-	helper.Dd(str)
+	//params := make(map[string]string)
+	//params["name"] = "jack"
+	//params["id"] = "2"
+
+	//str := helper.GenerateToken(params)
+	//helper.Dd(str)
 }

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 	"github.com/dgrijalva/jwt-go"
-	"../config"
+	"todo-app/config"
 )
 
 //获取当前路径

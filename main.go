@@ -2,15 +2,17 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"./module/api"
-	"./module/home"
-	"./config"
+	"todo-app/module/home"
+	"todo-app/config"
+	"todo-app/service"
 )
 
 //初始化
 func init(){
 	//加载配置
 	config.LoadConf()
+	//加载DB
+	service.LoadDb()
 }
 
 func main(){
@@ -26,8 +28,9 @@ func main(){
 	home.Load(app.Group(""), app)
 
 	//加载其它模块~
-	api.Load(app.Group("/api"), app)
+	//api.Load(app.Group("/api"), app)
 
+	//404
 	app.NoRoute(func(c *gin.Context){
 		c.String(404, "页面不见喽~~")
 	})
