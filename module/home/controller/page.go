@@ -11,8 +11,11 @@ var moduleViewPath string = "module/home/view/"
 //首页
 func Index(c *gin.Context){
 	var users []model.User
-	rs := service.Db.Order("id DESC").Find(&users).RecordNotFound()
-	c.JSON(200, rs)
+	err := service.Db.Order("id DESC").Find(&users).RecordNotFound()
+	if(err){
+		c.JSON(200, nil)
+	}
+	c.JSON(200, users)
 
 	//c.File(moduleViewPath+"index.html")
 }
