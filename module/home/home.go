@@ -20,5 +20,5 @@ func Load(router *gin.RouterGroup, app *gin.Engine){
 
 
 	//首页
-	router.GET("/", controller.Index)
+	router.GET("/", home.Index)
 }

@@ -18,6 +18,7 @@ type confParam struct {
 //DB配置
 type DB struct{
 	Mysql string `json:"mysql"`
+	TablePrefix string `json:"tablePrefix"`
 }
 
 //配置表

@@ -20,6 +20,10 @@ func ConnectDB() *gorm.DB{
 	if nil != err {
 		panic("failed to connect database")
 	}
+	//设置默认表前缀
+	//gorm.DefaultTableNameHandler = func(Db *gorm.DB, defaultTableName string) string {
+	//	return config.Conf.Db.TablePrefix + defaultTableName
+	//}
 	return Db
 }
 

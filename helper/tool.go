@@ -8,6 +8,10 @@ import (
 	"time"
 	"github.com/dgrijalva/jwt-go"
 	"todo-app/config"
+	"github.com/gin-gonic/gin"
+	"math/rand"
+	"crypto/md5"
+	"net/http"
 )
 
 //获取当前路径
@@ -51,4 +55,37 @@ func GenerateToken(params map[string]string, extend ...map[string]string) string
 		return ""
 	}
 	return resToken
+}
+
+//api返回格式
+type ApiRes struct{
+	code int `json:"code"`
+	Msg string `json:"msg"`
+	Data interface{} `json:"data"`
+}
+
+//接口返回
+func ReturnApi(c *gin.Context, code int, msg string, data ... interface{}){
+	if len(data) == 0{
+		data = make([]interface{}, 0)
+	}
+	c.JSON(http.StatusOK, &ApiRes{code, msg, data})
+	//c.Abort()
+	return
+}
+
+//生成随机字符串
+func RandStringBytes(n int) string {
+	var letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
+}
+
+//MD5字符串
+func Md5String(str string) string{
+	data := []byte(str)
+	return fmt.Sprintf("%x", md5.Sum(data))
 }

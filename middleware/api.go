@@ -33,10 +33,12 @@ func ApiAuth(allowUrl ...[]string) gin.HandlerFunc {
 		if tokenStr == ""{
 			//兼容GET请求
 			tokenStr = c.DefaultQuery("token", "")
-			if tokenStr == ""{
+			if tokenStr == "" {
+				//helper.ReturnApi(c, 401, "not token")
 				c.JSON(200, gin.H{
-					"status": 401,
-					"message": "not token",
+					"code": 401,
+					"msg": "not token",
+					"data": make([]interface{}, 0),
 				})
 				c.Abort()
 				return
@@ -65,7 +67,7 @@ func ApiAuth(allowUrl ...[]string) gin.HandlerFunc {
 			//判断验证
 			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 				//成功
-				c.Set("AuthData", claims)
+				c.Set("ApiAuth", claims)
 				c.Next()
 				return
 			}
@@ -73,9 +75,15 @@ func ApiAuth(allowUrl ...[]string) gin.HandlerFunc {
 			msgError = err.Error()
 		}
 		//验证失败
+		//c.JSON(200, gin.H{
+		//	"code": 401,
+		//	"msg": msgError,
+		//	"data": nil,
+		//})
 		c.JSON(200, gin.H{
-			"status": 401,
-			"message": msgError,
+			"code": 401,
+			"msg": msgError,
+			"data": make([]interface{}, 0),
 		})
 		c.Abort()
 		return
