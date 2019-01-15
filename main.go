@@ -5,6 +5,8 @@ import (
 	"todo-app/module/home"
 	"todo-app/config"
 	"todo-app/service"
+	"todo-app/module/api"
+	"todo-app/middleware"
 )
 
 //初始化
@@ -22,13 +24,13 @@ func main(){
 	app.Static("/assets", "./static")
 
 	//中间件
-	//app.Use(middlewares.Default())
+	app.Use(middleware.Default())
 
 	//加载默认模块
 	home.Load(app.Group(""), app)
 
 	//加载其它模块~
-	//api.Load(app.Group("/api"), app)
+	api.Load(app.Group("/api"), app)
 
 	//404
 	app.NoRoute(func(c *gin.Context){

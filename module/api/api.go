@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"../../module/api/controller"
-	"../../middleware"
+	"todo-app/module/api/controller"
+	"todo-app/middleware"
 )
 
 /**

@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"github.com/dgrijalva/jwt-go"
 	"fmt"
-	"../config"
+	"todo-app/config"
 )
 
 /**
