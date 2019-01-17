@@ -73,15 +73,19 @@ func Login(c *gin.Context){
 	helper.ReturnApi(c, 200, "登录成功", tokenData(user))
 }
 
+//Token模型
+type tokenModel struct {
+	Token string `json:"token"`
+}
+
 //格式化Token数据
-func tokenData(user model.User) map[string]string{
+func tokenData(user model.User) tokenModel{
 	//生成jwt Token
 	params := make(map[string]string)
 	params["uid"] = strconv.Itoa(user.Id)
 	params["nickname"] = user.Nickname
 	token := helper.GenerateToken(params)
 
-	res := make(map[string]string)
-	res["token"] = token
+	res := tokenModel{token}
 	return res
 }

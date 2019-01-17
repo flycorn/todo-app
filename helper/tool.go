@@ -12,6 +12,7 @@ import (
 	"math/rand"
 	"crypto/md5"
 	"net/http"
+	"strconv"
 )
 
 //获取当前路径
@@ -66,11 +67,24 @@ type ApiRes struct{
 
 //接口返回
 func ReturnApi(c *gin.Context, code int, msg string, data ... interface{}){
-	if len(data) == 0{
-		data = make([]interface{}, 0)
+	c.Set("return_code", code)
+	c.Set("return_msg", msg)
+	c.Set("return_data", data)
+
+	rs := gin.H{
+		"status":code,
+		"msg":msg}
+
+	l := len(data)
+	if l < 1{
+		rs["data"] = make([]interface{}, 0)
+	} else if l == 1 {
+		rs["data"] = data[0]
+	} else {
+		rs["data"] = data
 	}
-	c.JSON(http.StatusOK, &ApiRes{code, msg, data})
-	//c.Abort()
+	c.JSON(http.StatusOK, rs)
+	c.Abort()
 	return
 }
 
@@ -88,4 +102,45 @@ func RandStringBytes(n int) string {
 func Md5String(str string) string{
 	data := []byte(str)
 	return fmt.Sprintf("%x", md5.Sum(data))
+}
+
+//截取字符串
+func SubString(str string, begin, length int) string{
+	rs := []rune(str)
+	lth := len(rs)
+	if begin < 0 {
+		begin = 0
+	}
+	if begin >= lth {
+		begin = lth
+	}
+	end := begin + length
+
+	if end > lth {
+		end = lth
+	}
+	return string(rs[begin:end])
+}
+
+//获取登录的用户数据
+func GetUserData(c *gin.Context) jwt.MapClaims{
+	data, bool := c.Get("ApiAuth") //获取用户信息
+	if !bool {
+		return nil
+	}
+	return data.(jwt.MapClaims)
+}
+
+//获取用户ID
+func GetUid(c *gin.Context) int {
+	u := GetUserData(c) //获取用户数据
+	if u == nil{
+		return 0
+	}
+	uidS := u["uid"].(string)
+	uid, err := strconv.Atoi(uidS)
+	if err != nil{
+		return 0
+	}
+	return uid
 }
