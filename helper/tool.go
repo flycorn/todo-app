@@ -39,8 +39,9 @@ func GenerateToken(params map[string]string, extend ...map[string]string) string
 	//数据参数
 	claims := make(jwt.MapClaims)
 	//默认参数
-	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
+	claims["exp"] = time.Now().Add(time.Hour * time.Duration(config.Conf.JwtExpHour)).Unix()
 	claims["iat"] = time.Now().Unix()
+
 	//基础参数
 	if len(claims) > 0{
 		for k, v := range params {
@@ -143,4 +144,8 @@ func GetUid(c *gin.Context) int {
 		return 0
 	}
 	return uid
+}
+
+func GetParamsStr(){
+
 }

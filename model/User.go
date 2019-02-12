@@ -12,8 +12,8 @@ type User struct{
 	Nickname string `json:"nickname"`
 	Password string `json:"password"`
 	Salt string `json:"salt"`
-	CreateTime string `json:"create_time" gorm:"-"`
-	UpdateTime string `json:"update_time" gorm:"-"`
+	CreateTime helper.JSONTime `json:"create_time" gorm:"-"`
+	UpdateTime helper.JSONTime `json:"update_time" gorm:"-"`
 }
 
 func (User) TableName() string{

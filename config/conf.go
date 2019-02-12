@@ -12,6 +12,7 @@ import (
 type confParam struct {
 	Port string `json:"port"`
 	JwtSecret string `json:"jwtSecret"`
+	JwtExpHour int `json:"jwtExpHour"`
 	Db DB `json:"db"`
 }
 
