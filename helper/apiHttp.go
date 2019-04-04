@@ -71,9 +71,9 @@ func (h *ApiHttp) Get(apiUrl string, arg ...interface{}) error{
 
 	if l > 1 {
 		//json转结构体数据
-		err = json.Unmarshal(resData, &resModel)
+		json.Unmarshal(resData, &resModel)
 	}
-	return err
+	return nil
 }
 
 /**
@@ -129,9 +129,9 @@ func (h *ApiHttp) POST(apiUrl string, arg ...interface{}) error{
 
 	if l > 1 {
 		//json转结构体数据
-		err = json.Unmarshal(resData, &resModel)
+		json.Unmarshal(resData, &resModel)
 	}
-	return err
+	return nil
 }
 
 /**
